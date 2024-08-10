@@ -1,0 +1,75 @@
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+body {
+  background-color: #666 !important;
+}
+canvas {
+  object-fit: contain;
+  width: 100vw;
+  height: 100vh;
+  image-rendering: pixelated;
+}
+.panel {
+  top: 0;
+  left: 0;
+  position: fixed; 
+  display: grid;
+  justify-items: start;
+  > select {
+    font-size: inherit;
+    padding: 0.1rem;
+  }
+  > label {
+    > span {
+      border: 1px solid black;
+      padding: 0.2rem 0.3rem;
+      font-family: sans-serif;
+      color: black;
+      background-color: white;
+    }
+    > input {
+      display: none;
+      ~ .on {
+        display: none;
+      }
+      ~ .off {
+        display: block;
+      }
+      &:checked ~ .on {
+        display: block;
+      }
+      &:checked ~ .off {
+        display: none;
+      }
+    }
+  }
+}
+</style>
+<script type="module" src="./2d.js"></script>
+<canvas></canvas>
+<div class="panel">
+  <select id="map-select" disabled>
+    <option value="E1M1" selected>E1M1 Hangar</option>
+    <option value="E1M2">E1M2 Nuclear Plant</option>
+    <option value="E1M3">E1M3 Toxin Refinery</option>
+    <option value="E1M4">E1M4 Command Control</option>
+    <option value="E1M5">E1M5 Phobos Lab</option>
+    <option value="E1M6">E1M6 Central Processing</option>
+    <option value="E1M7">E1M7 Computer Station</option>
+    <option value="E1M8">E1M8 Phobos Anomaly</option>
+    <option value="E1M9">E1M9 Military Base</option>
+  </select>
+  <label>
+    <input id="culling-checkbox" type="checkbox">
+    <span class="on">Clipping mask ON</span>
+    <span class="off">Clipping mask OFF</span>
+  </label>
+  <label>
+    <input id="segments-checkbox" type="checkbox">
+    <span class="on">Segments</span>
+    <span class="off">Bounding boxes</span>
+  </label>
+</div>

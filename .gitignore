@@ -1,0 +1,5 @@
+.vscode
+obj
+bin
+*.wad
+!doom1.wad
