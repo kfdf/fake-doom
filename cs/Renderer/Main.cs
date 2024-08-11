@@ -8,7 +8,7 @@ partial class Renderer {
   public byte[] pixels;
   public short canvasWidth, canvasHeight;
   public short viewportOffset, viewportEnd, viewportWidth;
-  double projDist, invDist, midline;
+  double projDist, invDist, midline, invSkyTextureWidth;
   public double horizon;
   ulong[] mask;
   (float dist, short from, short upto)[] zbuffer;
@@ -37,6 +37,7 @@ partial class Renderer {
     invDist = player.fov / canvasWidth;
     horizon = canvasHeight * 0.5 - 0.5;
     midline = canvasWidth * 0.5 - 0.5;
+    invSkyTextureWidth = 256.0 / scene.skyTexture.width;
     mask = new ulong[(viewportSize + 63) / 64];
     zbuffer = new (float, short, short)[viewportSize * 32];
     zbufferLengths = new byte[viewportSize];

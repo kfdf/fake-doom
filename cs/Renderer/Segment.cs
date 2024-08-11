@@ -5,6 +5,7 @@ partial class Renderer {
     int idx = from * viewportWidth + column;
     double offset = -player.angle * (1 / 90.0) + 0.5 + 
       (column + viewportOffset - midline) * invDist * 0.5;
+    offset *= invSkyTextureWidth;
     short skyColumn = (short)((offset - Math.Floor(offset)) * scene.skyTexture.width);
     int skyPixelsColStart = skyColumn * scene.skyTexture.height;
     short skyFrom = (short)Math.Ceiling(horizon - canvasHeight / player.fov);
