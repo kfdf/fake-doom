@@ -1,5 +1,3 @@
-using System;
-
 partial class Renderer {
   void RenderThingsAndFloaters() {
     counts.things = thingsToRender.Count;

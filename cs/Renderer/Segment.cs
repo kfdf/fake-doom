@@ -1,5 +1,3 @@
-using System;
-
 partial class Renderer {
   void DrawSkyColumn(short column, short from, short upto) {
     int idx = from * viewportWidth + column;
