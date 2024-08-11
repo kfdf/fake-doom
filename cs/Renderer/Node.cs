@@ -86,7 +86,7 @@ partial class Renderer {
           if (scene.sidedefs[segment.frontSidedefIdx].middleTexture != Scene.NO_TEXTURE) {
             var renderer = acquireFloaterRenderer(segment, proj);
             double dist = renderer.MoveToNextColumn();
-            if (dist == -1) {
+            if (dist < 1) {
               renderer.Dispose();
             } else {
               floatersToRender.Add(((int)dist, floaterRenderers.Count));
