@@ -103,7 +103,7 @@ partial class Renderer {
         if (sector.ceilingTexture == Scene.SKY_TEXTURE) {
           DrawSkyColumn(column, rangeFrom, wallUpto);
           renderedSomething = true;
-        } else if (sector.ceilingTexture != Scene.NO_TEXTURE) {
+        } else {
           ceilingRenderer.AddColumn(column, rangeFrom, wallFrom);
         }
       }
@@ -111,7 +111,7 @@ partial class Renderer {
         if (sector.floorTexture == Scene.SKY_TEXTURE) {
           DrawSkyColumn(column, wallUpto, rangeUpto);
           renderedSomething = true;
-        } else if (sector.floorTexture != Scene.NO_TEXTURE) {
+        } else {
           floorRenderer.AddColumn(column, wallUpto, rangeUpto);
         }
       }
@@ -195,7 +195,7 @@ partial class Renderer {
           if (frontSector.ceilingTexture == Scene.SKY_TEXTURE) {
             DrawSkyColumn(column, rangeFrom, ceilingUpto);
             rendereredSomething = true;
-          } else if (frontSector.ceilingTexture != Scene.NO_TEXTURE) {
+          } else {
             ceilingRenderer.AddColumn(column, rangeFrom, ceilingUpto);
           }
           rangeFrom = ceilingUpto;
@@ -208,7 +208,7 @@ partial class Renderer {
           if (frontSector.floorTexture == Scene.SKY_TEXTURE) {
             DrawSkyColumn(column, floorFrom, rangeUpto);
             rendereredSomething = true;
-          } else if (frontSector.floorTexture != Scene.NO_TEXTURE) {
+          } else {
             floorRenderer.AddColumn(column, floorFrom, rangeUpto);
           }
           rangeUpto = floorFrom;

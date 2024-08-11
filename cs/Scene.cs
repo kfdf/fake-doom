@@ -202,12 +202,12 @@ partial class Scene {
         TextureLocation.Upper => sectors[sectorIdx].ceilingTexture,
         TextureLocation.Lower or _ => sectors[sectorIdx].floorTexture,
       };
-      while (name != default && name != NO_TEXTURE) {
+      while (name != default) {
         if (AnimatedTextures.Flats.TryGetValue(name, out var nextName)) {
           animatedFlats.Add(new(sectorIdx, location));
         }
         if (flatTexs.ContainsKey(name)) return;
-        flatTexs[name] = wad.ReadFlat(name);
+        flatTexs[name] = name != NO_TEXTURE ? wad.ReadFlat(name) : new byte[64 * 64];
         name = nextName;
       }
     }
