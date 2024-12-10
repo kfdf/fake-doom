@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 * {
   box-sizing: border-box;
@@ -5,6 +7,7 @@
 }
 body {
   background-color: #666 !important;
+  overflow: hidden;
 }
 canvas {
   object-fit: contain;
@@ -23,7 +26,7 @@ canvas {
     font-size: inherit;
     padding: 0.1rem;
   }
-  label {
+  > label {
     > span {
       border: 1px solid black;
       padding: 0.2rem 0.3rem;
@@ -52,26 +55,24 @@ canvas {
     color: white;
   }
 }
-#toggle-controls {
+#controls {
   touch-action: none;
-  + div {
-    display: none;
-    grid-template-columns: repeat(4, 2.5rem);
-    > button {
-      border: 1px solid black;
-      text-align: center;
-      font-size: 2rem;
-      line-height: 2.5rem;
-      background-color: white;
-      color: black;
-      font-family: sans-serif;
-      cursor: pointer;
-      &[data-key2] {
-        text-decoration: underline;
-      }
-    }
-    label:has(:checked) + & {
-      display: grid;
+  display: none;
+  label:has(:checked) + & {
+    display: grid;
+  }
+  grid-template-columns: repeat(4, 2.5rem);
+  > button {
+    border: 1px solid black;
+    text-align: center;
+    font-size: 2rem;
+    line-height: 2.5rem;
+    background-color: white;
+    color: black;
+    font-family: sans-serif;
+    cursor: pointer;
+    &[data-key2] {
+      text-decoration: underline;
     }
   }
 }
@@ -105,23 +106,21 @@ canvas {
     <span class="on">Doors open</span>
     <span class="off">Doors closed</span>
   </label>
-  <div>
-    <label id="toggle-controls">
-      <input type="checkbox">
-      <span class="on">Hide controls</span>
-      <span class="off">Show controls</span>
-    </label>
-    <div id="controls">
-      <button data-key="KeyQ">U</button>
-      <button data-key="ArrowLeft">L</button>
-      <button data-key="ArrowUp">F</button>
-      <button data-key="ArrowRight">R</button>
-      <button data-key="KeyA">D</button>
-      <button data-key="ArrowLeft" data-key2="AltLeft">L</button>
-      <button data-key="ArrowDown">B</button>
-      <button data-key="ArrowRight" data-key2="AltLeft">R</button>
-      <button data-key="Space" style="grid-column: 1 / -1">Space</button>
-    </div>
+  <label>
+    <input type="checkbox">
+    <span class="on">Hide controls</span>
+    <span class="off">Show controls</span>
+  </label>
+  <div id="controls">
+    <button data-key="KeyQ">U</button>
+    <button data-key="ArrowLeft">L</button>
+    <button data-key="ArrowUp">F</button>
+    <button data-key="ArrowRight">R</button>
+    <button data-key="KeyA">D</button>
+    <button data-key="ArrowLeft" data-key2="AltLeft">L</button>
+    <button data-key="ArrowDown">B</button>
+    <button data-key="ArrowRight" data-key2="AltLeft">R</button>
+    <button data-key="Space" style="grid-column: 1 / -1">Space</button>
   </div>
   <pre id="stats"></pre>
 </div>
