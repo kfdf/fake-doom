@@ -55,12 +55,12 @@ canvas {
 #toggle-controls {
   + div {
     display: none;
-    grid-template-columns: repeat(4, 2rem);
-    > div {
+    grid-template-columns: repeat(4, 2.5rem);
+    > button {
       border: 1px solid black;
       text-align: center;
-      font-size: 1.5rem;
-      line-height: 2rem;
+      font-size: 2rem;
+      line-height: 2.5rem;
       background-color: white;
       color: black;
       font-family: sans-serif;
@@ -111,15 +111,15 @@ canvas {
       <span class="off">Show controls</span>
     </label>
     <div id="controls">
-      <div data-key="KeyQ">U</div>
-      <div data-key="ArrowLeft">L</div>
-      <div data-key="ArrowUp">F</div>
-      <div data-key="ArrowRight">R</div>
-      <div data-key="KeyA">D</div>
-      <div data-key="ArrowLeft" data-key2="AltLeft">L</div>
-      <div data-key="ArrowDown">B</div>
-      <div data-key="ArrowRight" data-key2="AltLeft">R</div>
-      <div data-key="Space" style="grid-column: 1 / -1">Space</div>
+      <button data-key="KeyQ">U</button>
+      <button data-key="ArrowLeft">L</button>
+      <button data-key="ArrowUp">F</button>
+      <button data-key="ArrowRight">R</button>
+      <button data-key="KeyA">D</button>
+      <button data-key="ArrowLeft" data-key2="AltLeft">L</button>
+      <button data-key="ArrowDown">B</button>
+      <button data-key="ArrowRight" data-key2="AltLeft">R</button>
+      <button data-key="Space" style="grid-column: 1 / -1">Space</button>
     </div>
   </div>
   <pre id="stats"></pre>
