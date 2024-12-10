@@ -3,9 +3,6 @@
   box-sizing: border-box;
   margin: 0;
 }
-html {
-  touch-action: none;
-}
 body {
   background-color: #666 !important;
 }
@@ -56,6 +53,7 @@ canvas {
   }
 }
 #toggle-controls {
+  touch-action: none;
   + div {
     display: none;
     grid-template-columns: repeat(4, 2.5rem);
