@@ -17,6 +17,22 @@ let keys = new Set()
 addEventListener('keydown', e => keys.add(e.code))
 addEventListener('keyup', e => keys.delete(e.code))
 
+let controls = document.querySelector('#controls')
+let current_key = null, current_key2 = null
+controls.addEventListener('pointerdown', e => {
+  keys.delete(current_key)
+  keys.delete(current_key2)
+  let button = e.target?.closest('[data-key]')
+  keys.add(current_key = button?.dataset.key)
+  keys.add(current_key2 = button?.dataset.key2)
+})
+addEventListener('pointerup', e => {
+  keys.delete(current_key)
+  keys.delete(current_key2)
+  current_key = null
+  current_key2 = null
+})
+
 let sins = new Float64Array(360 + 90)
 for (let ang = 0; ang < sins.length; ang++) {
   sins[ang] = Math.sin(ang / 180 * Math.PI)

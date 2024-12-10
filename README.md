@@ -18,7 +18,7 @@ I find all the trigonometry code in Recreating Doom and DIYDoom quite messy and 
 
 dist1 and dist2 are distances from the edges to the plane that is parallel to the screen and contains the player. These are the distances that we actually want so there is no need for "fisheye" corrections. 
 
-Then we project column centers back on the segment. This is basically finding the intersection point of two lines, but we only need the distance to it from the segment edge and dot products give it to us without calulating square roots.
+Then we project column centers back on the segment. This is basically finding the intersection point of two lines, but we only need the distance to it from the segment edge and dot products give it to us without calculating square roots.
 
 ![project segment](plots/column_to_segment.png)
 

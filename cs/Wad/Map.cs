@@ -67,7 +67,7 @@ record struct Node : IMapComponent<Node>, IMapComponentExt<Node> {
     y = lump.ReadShort();
     dx = lump.ReadShort();
     dy = lump.ReadShort();
-    double len = System.Math.Sqrt(dx * dx + dy * dy);
+    double len = Math.Sqrt(dx * dx + dy * dy);
     dx /= len;
     dy /= len;
   }

@@ -18,11 +18,12 @@ canvas {
   position: fixed; 
   display: grid;
   justify-items: start;
+  user-select: none;
   > select {
     font-size: inherit;
     padding: 0.1rem;
   }
-  > label {
+  label {
     > span {
       border: 1px solid black;
       padding: 0.2rem 0.3rem;
@@ -49,6 +50,28 @@ canvas {
   > pre {
     font-family: sans-serif;
     color: white;
+  }
+}
+#toggle-controls {
+  + div {
+    display: none;
+    grid-template-columns: repeat(4, 2rem);
+    > div {
+      border: 1px solid black;
+      text-align: center;
+      font-size: 1.5rem;
+      line-height: 2rem;
+      background-color: white;
+      color: black;
+      font-family: sans-serif;
+      cursor: pointer;
+      &[data-key2] {
+        text-decoration: underline;
+      }
+    }
+    label:has(:checked) + & {
+      display: grid;
+    }
   }
 }
 </style>
@@ -81,5 +104,23 @@ canvas {
     <span class="on">Doors open</span>
     <span class="off">Doors closed</span>
   </label>
+  <div>
+    <label id="toggle-controls">
+      <input type="checkbox">
+      <span class="on">Hide controls</span>
+      <span class="off">Show controls</span>
+    </label>
+    <div id="controls">
+      <div data-key="KeyQ">U</div>
+      <div data-key="ArrowLeft">L</div>
+      <div data-key="ArrowUp">F</div>
+      <div data-key="ArrowRight">R</div>
+      <div data-key="KeyA">D</div>
+      <div data-key="ArrowLeft" data-key2="AltLeft">L</div>
+      <div data-key="ArrowDown">B</div>
+      <div data-key="ArrowRight" data-key2="AltLeft">R</div>
+      <div data-key="Space" style="grid-column: 1 / -1">Space</div>
+    </div>
+  </div>
   <pre id="stats"></pre>
 </div>
