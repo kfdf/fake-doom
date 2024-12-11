@@ -176,7 +176,7 @@ static class ThingType {
     (80,   "POB2  A"),
     (24,   "POL5  A"),
     (81,   "BRS1  A"),
-    (88,   "BBRN A"),
+    (88,   "BBRN  A"),
     (1,    "PLAY  E E1 E2E8 E3E7 E4E6 E5"),
     (2,    "PLAY  A A1 A2A8 A3A7 A4A6 A5"),
     (3,    "PLAY  B B1 B2B8 B3B7 B4B6 B5"),

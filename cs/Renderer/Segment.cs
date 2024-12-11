@@ -187,7 +187,7 @@ partial class Renderer {
       var (rangeFrom, rangeUpto) = clippingRanges[column];
       bool rendereredSomething = false;
       if (isCeilingVisible) {
-        double ceilingEnd = horizon - scale* (frontSector.ceilingHeight - player.height);
+        double ceilingEnd = horizon - scale * (frontSector.ceilingHeight - player.height);
         short ceilingUpto = (short)Math.Clamp(Math.Ceiling(ceilingEnd), rangeFrom, rangeUpto);
         if (rangeFrom < ceilingUpto) {
           if (frontSector.ceilingTexture == Scene.SKY_TEXTURE) {

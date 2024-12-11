@@ -37,16 +37,37 @@ canvas {
       display: none;
       ~ .on {
         display: none;
+        input:checked ~ & {
+          display: block;
+        }
       }
       ~ .off {
         display: block;
+        input:checked ~ & {
+          display: none;
+        }
       }
-      &:checked ~ .on {
-        display: block;
-      }
-      &:checked ~ .off {
-        display: none;
-      }
+    }
+  }
+}
+#controls {
+  touch-action: none;
+  display: none;
+  label:has(:checked) + & {
+    display: grid;
+  }
+  grid-template-columns: repeat(3, 2.5rem);
+  > button {
+    border: 1px solid black;
+    text-align: center;
+    font-size: 2rem;
+    line-height: 2.5rem;
+    background-color: white;
+    color: black;
+    font-family: sans-serif;
+    cursor: pointer;
+    &[data-key2] {
+      text-decoration: underline;
     }
   }
 }
@@ -75,4 +96,18 @@ canvas {
     <span class="on">Segments</span>
     <span class="off">Bounding boxes</span>
   </label>
+  <label>
+    <input type="checkbox">
+    <span class="on">Hide controls</span>
+    <span class="off">Show controls</span>
+  </label>
+  <div id="controls">
+    <button data-key="ArrowLeft">L</button>
+    <button data-key="ArrowUp">F</button>
+    <button data-key="ArrowRight">R</button>
+    <button data-key="ArrowLeft" data-key2="AltLeft">L</button>
+    <button data-key="ArrowDown">B</button>
+    <button data-key="ArrowRight" data-key2="AltLeft">R</button>
+    <button data-key="Space" style="grid-column: 1 / -1">Space</button>
+  </div>
 </div>

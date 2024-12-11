@@ -38,15 +38,15 @@ canvas {
       display: none;
       ~ .on {
         display: none;
+        input:checked ~ & {
+          display: block;
+        }
       }
       ~ .off {
         display: block;
-      }
-      &:checked ~ .on {
-        display: block;
-      }
-      &:checked ~ .off {
-        display: none;
+        input:checked ~ & {
+          display: none;
+        }
       }
     }
   }
