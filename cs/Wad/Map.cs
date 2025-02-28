@@ -1,11 +1,11 @@
-interface IMapComponent<T> {
+interface IMapComponent {
   static abstract (string lumpName, int recordSize) Info { get; }
   void Init(Lump lump);
 }
-interface IMapComponentExt<T> {
+interface IMapComponentExt {
   void InitExtended(Lump lump);
 }
-record struct Linedef : IMapComponent<Linedef> {
+record struct Linedef : IMapComponent {
   public static (string, int) Info => ("LINEDEFS", 14);
   public int startVertexIdx, endVertexIdx, frontSidedefIdx, backSidedefIdx;
   public short flags, lineType, sectorTag;
@@ -22,7 +22,7 @@ record struct Linedef : IMapComponent<Linedef> {
     lowerUnpegged = (flags & 0b10000) != 0;
   }
 }
-record struct Vertex : IMapComponent<Vertex>, IMapComponentExt<Vertex> {
+record struct Vertex : IMapComponent, IMapComponentExt {
   public static (string, int) Info => ("VERTEXES", 4);
   public double x, y;
   public void Init(Lump lump) {
@@ -34,7 +34,7 @@ record struct Vertex : IMapComponent<Vertex>, IMapComponentExt<Vertex> {
     y = lump.ReadInt() / 65536.0;
   }
 }
-record struct Node : IMapComponent<Node>, IMapComponentExt<Node> {
+record struct Node : IMapComponent, IMapComponentExt {
   public static (string lumpName, int recordSize) Info => ("NODES", 28);
   public record struct ChildBox {
     public double top, bottom, left, right;
@@ -70,6 +70,7 @@ record struct Node : IMapComponent<Node>, IMapComponentExt<Node> {
     double len = Math.Sqrt(dx * dx + dy * dy);
     dx /= len;
     dy /= len;
+    firstThingIdx = -1;
   }
   public void Init(Lump lump) {
     InitMain(lump);
@@ -77,7 +78,6 @@ record struct Node : IMapComponent<Node>, IMapComponentExt<Node> {
     leftBox.Init(lump);
     rightRef.Init(lump);
     leftRef.Init(lump);
-    firstThingIdx = -1;
   }
   public void InitExtended(Lump lump) {
     InitMain(lump);
@@ -85,11 +85,10 @@ record struct Node : IMapComponent<Node>, IMapComponentExt<Node> {
     leftBox.Init(lump);
     rightRef.InitExtended(lump);
     leftRef.InitExtended(lump);
-    firstThingIdx = -1;
   }
   public int firstThingIdx;
 }
-record struct Subsector: IMapComponent<Subsector>, IMapComponentExt<Subsector> {
+record struct Subsector: IMapComponent, IMapComponentExt {
   public static (string, int) Info => ("SSECTORS", 4);
   public int firstSegIdx, segmentCount;
   public void Init(Lump lump) {
@@ -103,9 +102,8 @@ record struct Subsector: IMapComponent<Subsector>, IMapComponentExt<Subsector> {
   }
 
   public int firstThingIdx;
-  public long nextRenderCount;
 }
-record struct Segment: IMapComponent<Segment>, IMapComponentExt<Segment> {
+record struct Segment: IMapComponent, IMapComponentExt {
   public static (string, int) Info => ("SEGS", 12);
   public int startVertexIdx, endVertexIdx, linedefIdx;
   public double offset;
@@ -128,7 +126,7 @@ record struct Segment: IMapComponent<Segment>, IMapComponentExt<Segment> {
   public double dx, dy, invLength;
   public int frontSidedefIdx, backSidedefIdx, frontSectorIdx, backSectorIdx;
 }
-record struct Thing: IMapComponent<Thing> {
+record struct Thing: IMapComponent {
   public static (string, int) Info => ("THINGS", 10);
   public short angle, type, flags;
   public double x, y;
@@ -141,11 +139,12 @@ record struct Thing: IMapComponent<Thing> {
   }
   public int sectorIdx, nextThingIdx;
   public (
-    long frameCount, bool mirror, bool transparent, bool hanging, double dist,
+    bool mirror, bool transparent, bool hanging, double dist,
     ShortString spriteName, double canvasLeft, double canvasRight, double scale
   ) cached;
+  public long cacheFrameCount;
 }
-record struct Sector: IMapComponent<Sector> {
+record struct Sector: IMapComponent {
   public static (string, int) Info => ("SECTORS", 26);
   public double floorHeight, ceilingHeight;
   public ShortString floorTexture, ceilingTexture;
@@ -161,7 +160,7 @@ record struct Sector: IMapComponent<Sector> {
   }
   public int adjSectorFrom, adjSectorUpto;
 }
-record struct Sidedef: IMapComponent<Sidedef> {
+record struct Sidedef: IMapComponent {
   public static (string, int) Info => ("SIDEDEFS", 30);
   public double xOffset, yOffset;
   public ShortString upperTexture, middleTexture, lowerTexture;

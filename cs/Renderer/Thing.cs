@@ -41,7 +41,7 @@ partial class Renderer {
       ref var thing = ref scene.things[thingIdx];
       double spriteCanvasLeft, spriteCanvasRight;
       double dist;
-      if (thing.cached.frameCount == scene.frameCount) {
+      if (thing.cacheFrameCount == scene.frameCount) {
         spriteCanvasLeft = thing.cached.canvasLeft;
         spriteCanvasRight = thing.cached.canvasRight;
         dist = thing.cached.dist;
@@ -73,9 +73,10 @@ partial class Renderer {
         spriteCanvasRight = spriteCanvasLeft + sprite.width * scale;
 
         thing.cached = (
-          scene.frameCount, mirror, thingInfo.transparent, thingInfo.hanging, 
+          mirror, thingInfo.transparent, thingInfo.hanging, 
           dist, spriteName, spriteCanvasLeft, spriteCanvasRight, scale
         );
+        thing.cacheFrameCount = scene.frameCount;
       }
       if (viewportOffset < spriteCanvasRight && spriteCanvasLeft <= viewportEnd - 1) {
         thingsToRender.Add(((int)dist, thingIdx));
@@ -86,7 +87,7 @@ partial class Renderer {
 
   void DrawThing(int thingIdx) {
     ref var thing = ref scene.things[thingIdx];
-    var (_, mirror, transparent, hanging, dist, spriteName, canvasLeft, canvasRight, scale) = thing.cached;
+    var (mirror, transparent, hanging, dist, spriteName, canvasLeft, canvasRight, scale) = thing.cached;
     
     var sprite = scene.sprites[spriteName];
     ref var sector = ref scene.sectors[thing.sectorIdx];

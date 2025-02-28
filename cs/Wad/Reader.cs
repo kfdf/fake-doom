@@ -98,7 +98,7 @@ class WadReader {
     lump.offset += 4;
     return (read<Vertex>(lump), read<Subsector>(lump), read<Segment>(lump), read<Node>(lump));
 
-    T[] read<T>(Lump lump) where T: IMapComponentExt<T> {
+    T[] read<T>(Lump lump) where T: IMapComponentExt {
       var ret = new T[lump.ReadInt()];
       for (int i = 0; i < ret.Length; i++) {
         ret[i].InitExtended(lump);
@@ -106,7 +106,7 @@ class WadReader {
       return ret;
     }
   }
-  public T[] ReadMap<T>(ShortString mapName) where T: IMapComponent<T> {
+  public T[] ReadMap<T>(ShortString mapName) where T: IMapComponent {
     var (file, entry) = GetMapEntry<T>(mapName, T.Info.lumpName);
     var ret = new T[entry.length / T.Info.recordSize];
     using var lump = new Lump(file, entry);
@@ -199,7 +199,7 @@ class WadReader {
   }
   (FileStream, DirectoryEntry) GetMapEntry<T>(
     ShortString mapName, ShortString lumpName
-  ) where T: IMapComponent<T> {
+  ) where T: IMapComponent {
     if (directoryLookup.TryGetValue((mapName, LumpType.None), out var entryIndex)) {
       while (directory[++entryIndex].name != lumpName);
       return (file, directory[entryIndex]);
