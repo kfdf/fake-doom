@@ -1,4 +1,4 @@
-partial class Scene {
+class Scene {
   public Vertex[] vertexes;
   public Linedef[] linedefs;
   public Sidedef[] sidedefs;
@@ -123,6 +123,7 @@ partial class Scene {
           }
         }
         radius /= 2;
+        radiiByThingType[thing.type] = radius;
       }
       int nodeIdx = nodes.Length - 1;
       while (true) {
@@ -227,6 +228,7 @@ partial class Scene {
 
     this.skyTexture = wad.ReadTexture(skyTexture);
     colormaps = wad.ReadColormaps();
+    wad.Cleanup();
     spectreColormap = new byte[0x400];
     colormaps[4].CopyTo(spectreColormap, 0);
     colormaps[8].CopyTo(spectreColormap, 0x100);

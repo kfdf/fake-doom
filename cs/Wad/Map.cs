@@ -122,7 +122,6 @@ record struct Segment: IMapComponent, IMapComponentExt {
     linedefIdx = lump.ReadReference();
     isBackside = lump.ReadByte() != 0;
   }  
-  public double frameCount;
   public double dx, dy, invLength;
   public int frontSidedefIdx, backSidedefIdx, frontSectorIdx, backSectorIdx;
 }

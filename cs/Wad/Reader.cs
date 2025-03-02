@@ -89,8 +89,12 @@ class WadReader {
       }
     }
   }
+  public void Cleanup() {
+    patchCache.Clear();
+    patchCache[default] = Picture.Empty;
+  }
   public (Vertex[], Subsector[], Segment[], Node[]) ReadExtended(ShortString mapName) {
-    var (file, entry) = GetMapEntry<Node>(mapName, Node.Info.lumpName);
+    var (file, entry) = GetMapEntry(mapName, Node.Info.lumpName);
     using var lump = new Lump(file, entry);
     if (!"XNOD"u8.SequenceEqual(lump.ReadBytes(4))) {
       throw new Exception("Expected XNOD");
@@ -107,7 +111,7 @@ class WadReader {
     }
   }
   public T[] ReadMap<T>(ShortString mapName) where T: IMapComponent {
-    var (file, entry) = GetMapEntry<T>(mapName, T.Info.lumpName);
+    var (file, entry) = GetMapEntry(mapName, T.Info.lumpName);
     var ret = new T[entry.length / T.Info.recordSize];
     using var lump = new Lump(file, entry);
     for (int i = 0; i < ret.Length; i++) ret[i].Init(lump);
@@ -197,14 +201,12 @@ class WadReader {
       return fallback.GetEntry(name, type);
     }
   }
-  (FileStream, DirectoryEntry) GetMapEntry<T>(
-    ShortString mapName, ShortString lumpName
-  ) where T: IMapComponent {
+  (FileStream, DirectoryEntry) GetMapEntry(ShortString mapName, ShortString lumpName){
     if (directoryLookup.TryGetValue((mapName, LumpType.None), out var entryIndex)) {
       while (directory[++entryIndex].name != lumpName);
       return (file, directory[entryIndex]);
     } else {
-      return fallback.GetMapEntry<T>(mapName, lumpName);
+      return fallback.GetMapEntry(mapName, lumpName);
     }
   }
   TextureDef GetTextureDefinition(ShortString texName) {
