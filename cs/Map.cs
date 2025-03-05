@@ -52,9 +52,9 @@ class MapRenderer {
 
   public void RenderMap() {
     Array.Clear(pixels);
-    double xFrom = (int)Math.Ceiling(mapLeft  / 1024 - 3) * 1024;
-    double xUpto = (int)Math.Ceiling(mapRight / 1024 + 3) * 1024;
-    for (double x = xFrom; x < xUpto; x += 1024) {
+    int xFrom = (int)Math.Ceiling(mapLeft  / 1024 - 3) * 1024;
+    int xUpto = (int)Math.Ceiling(mapRight / 1024 + 3) * 1024;
+    for (int x = xFrom; x < xUpto; x += 1024) {
       int col = (int)MapWorldToCanvasX(x);
       if (col < 0 || col >= canvasWidth) continue;
       int step = canvasWidth * 2;
@@ -62,14 +62,14 @@ class MapRenderer {
         pixels[i] = 0xffaaaaaa;
       }
     }
-    double yFrom = (int)Math.Ceiling(mapBottom / 1024 - 3) * 1024;
-    double yUpto = (int)Math.Ceiling(mapTop    / 1024 + 3) * 1024;
-    for (double y = yFrom; y < yUpto; y += 1024) {
+    int yFrom = (int)Math.Ceiling(mapBottom / 1024 - 3) * 1024;
+    int yUpto = (int)Math.Ceiling(mapTop    / 1024 + 3) * 1024;
+    for (int y = yFrom; y < yUpto; y += 1024) {
       int row = (int)MapWorldToCanvasY(y);
       if (row < 0 || row >= canvasHeight) continue;
-      int rowFrom = row * canvasWidth;
-      int rowUpto = rowFrom + canvasWidth;
-      for (int i = rowFrom; i < rowUpto; i += 2) {
+      int idxFrom = row * canvasWidth;
+      int idxUpto = idxFrom + canvasWidth;
+      for (int i = idxFrom; i < idxUpto; i += 2) {
         pixels[i] = 0xffaaaaaa;
       }
     }

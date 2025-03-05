@@ -13,16 +13,27 @@ int doomVersion = 0;
 if (args.Length > 0) {
   doomVersion = int.Parse(args[0]);
 }
-var file = File.OpenRead(Path.Join(AppContext.BaseDirectory, doomVersion switch {
+FileStream OpenWad(string name) {
+  string path = AppContext.BaseDirectory[..^1];
+  while (path != null) {
+    try {
+      var ret = File.OpenRead(Path.Join(path, name));
+      Console.WriteLine($"Found {name} in {path}");
+      return ret;
+    } catch { }
+    path = Path.GetDirectoryName(path);
+  }
+  throw new Exception($"{name} is not found");
+}
+var file = OpenWad(doomVersion switch {
   1 => "doom.wad",
   2 => "doom2.wad",
   _ => "doom1.wad",
-}));
+});
 
 var wad = new WadReader(file);
 foreach (string arg in args.Skip(1)) {
-  var pwadFile = File.OpenRead(Path.Join(AppContext.BaseDirectory, arg));
-  wad = new WadReader(pwadFile, wad);
+  wad = new WadReader(OpenWad(arg), wad);
 }
 
 string mapName = doomVersion == 2 ? "MAP01" : "E1M1";

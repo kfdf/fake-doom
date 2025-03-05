@@ -178,39 +178,34 @@ class Scene {
         TextureLocation.Middle => sidedefs[sidedefIdx].middleTexture,
         TextureLocation.Lower or _ => sidedefs[sidedefIdx].lowerTexture,
       };
-      while (name != default && name != NO_TEXTURE) {
-        if (AnimatedTextures.Walls.TryGetValue(name, out var nextName)) {
-          animatedWalls.Add(new(sidedefIdx, location));
-        }
+      if (name == NO_TEXTURE) return;
+      if (AnimatedTextures.Walls.ContainsKey(name)) {
+        animatedWalls.Add(new(sidedefIdx, location));
+      }
+      do {
         if (isFloater) {
-          if (floaters.ContainsKey(name)) return;
+          if (floaters.ContainsKey(name)) break;
           floaters[name] = wad.ReadFloater(name);
         } else {
-          if (wallTexs.ContainsKey(name)) return;
+          if (wallTexs.ContainsKey(name)) break;
           wallTexs[name] = wad.ReadTexture(name);
         }
-        name = nextName;
-      }
+      } while (AnimatedTextures.Walls.TryGetValue(name, out name));
     }
     for (int i = 0; i < sectors.Length; i++) {
       ref var sector = ref sectors[i];
-      readFlatTexture(i, TextureLocation.Upper);
-      readFlatTexture(i, TextureLocation.Lower);
+      readFlatTexture(sector.ceilingTexture, i, TextureLocation.Upper);
+      readFlatTexture(sector.floorTexture, i, TextureLocation.Lower);
       sector.colormapIndex = (short)(~(sector.lightLevel >> 3) & 0x1f);
     }
-    void readFlatTexture(int sectorIdx, TextureLocation location) {
-      var name = location switch {
-        TextureLocation.Upper => sectors[sectorIdx].ceilingTexture,
-        TextureLocation.Lower or _ => sectors[sectorIdx].floorTexture,
-      };
-      while (name != default) {
-        if (AnimatedTextures.Flats.TryGetValue(name, out var nextName)) {
-          animatedFlats.Add(new(sectorIdx, location));
-        }
-        if (flatTexs.ContainsKey(name)) return;
-        flatTexs[name] = name != NO_TEXTURE ? wad.ReadFlat(name) : new byte[64 * 64];
-        name = nextName;
+    void readFlatTexture(ShortString name, int sectorIdx, TextureLocation location) {
+      if (AnimatedTextures.Flats.ContainsKey(name)) {
+        animatedFlats.Add(new(sectorIdx, location));
       }
+      do {
+        if (flatTexs.ContainsKey(name)) break;
+        flatTexs[name] = name != NO_TEXTURE ? wad.ReadFlat(name) : new byte[64 * 64];
+      } while (AnimatedTextures.Flats.TryGetValue(name, out name));
     }
 
     Span<short> types = [1, 2, 3, 4, 8, 12, 13, 17];
