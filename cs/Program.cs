@@ -17,21 +17,20 @@ FileStream OpenWad(string name) {
   string path = AppContext.BaseDirectory[..^1];
   while (path != null) {
     try {
-      var ret = File.OpenRead(Path.Join(path, name));
-      Console.WriteLine($"Found {name} in {path}");
+      string fullPath = Path.Join(path, name);
+      var ret = File.OpenRead(fullPath);
+      Console.WriteLine($"Loading {fullPath}");
       return ret;
     } catch { }
     path = Path.GetDirectoryName(path);
   }
-  throw new Exception($"{name} is not found");
+  throw new Exception($"{name} not found");
 }
-var file = OpenWad(doomVersion switch {
+var wad = new WadReader(OpenWad(doomVersion switch {
   1 => "doom.wad",
   2 => "doom2.wad",
   _ => "doom1.wad",
-});
-
-var wad = new WadReader(file);
+}));
 foreach (string arg in args.Skip(1)) {
   wad = new WadReader(OpenWad(arg), wad);
 }
@@ -47,9 +46,9 @@ for (int i = 0; i < overbrightPalette.Length; i++) {
   uint r = color & 0xff;
   uint g = color >> 8 & 0xff;
   uint b = color >> 16 & 0xff;
-  r = (byte)Math.Min(0xff, (r + 30) * 1.5);
-  g = (byte)Math.Min(0xff, (g + 30) * 1.5);
-  b = (byte)Math.Min(0xff, (b + 30) * 1.5);
+  r = Math.Min(0xff, (r + 30) * 3 / 2);
+  g = Math.Min(0xff, (g + 30) * 3 / 2);
+  b = Math.Min(0xff, (b + 30) * 3 / 2);
   overbrightPalette[i] =  0xff000000 | b << 16 | g << 8 | r;
 }
 var palette = overbrightPalette;
