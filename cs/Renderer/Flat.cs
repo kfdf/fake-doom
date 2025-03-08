@@ -12,7 +12,7 @@ partial class Renderer {
     int rowStart = row * viewportWidth;
     var colormap = GetColormap(colormapIdx, dist);
     for (int col = from; col < upto; col++) {
-      int idx = ((~(int)flatY & 0x3f) << 6) + ((int)flatX & 0x3f);
+      int idx = ((~flatY.ToInt() & 0x3f) << 6) + (flatX.ToInt() & 0x3f);
       flatX += stepX;
       flatY += stepY;
       pixels[rowStart + col] = colormap[texture[idx]];

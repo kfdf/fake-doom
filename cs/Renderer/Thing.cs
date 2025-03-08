@@ -79,7 +79,7 @@ partial class Renderer {
         thing.cacheFrameCount = scene.frameCount;
       }
       if (viewportOffset < spriteCanvasRight && spriteCanvasLeft <= viewportEnd - 1) {
-        thingsToRender.Add(((int)dist, thingIdx));
+        thingsToRender.Add((dist.ToInt(), thingIdx));
       }
       thingIdx = thing.nextThingIdx;
     }
@@ -126,13 +126,13 @@ partial class Renderer {
         double postIdx = (postFrom - spriteCanvasTop) * rowCanvasToSprite - post.from + 1;
         if (transparent) {
           for (var idx = idxFrom; idx < idxUpto; idx += viewportWidth) {
-            int colormapIdx = ((postPixels[(int)postIdx] + scene.frameCount) & 0b11000) << 5;
+            int colormapIdx = ((postPixels[postIdx.ToInt()] + scene.frameCount) & 0b11000) << 5;
             pixels[idx] = colormap[pixels[idx] | colormapIdx];
             postIdx += rowCanvasToSprite;
           }
         } else {
           for (var idx = idxFrom; idx < idxUpto; idx += viewportWidth) {
-            var color = colormap[postPixels[(int)postIdx]];
+            var color = colormap[postPixels[postIdx.ToInt()]];
             pixels[idx] = color;
             postIdx += rowCanvasToSprite;
           }

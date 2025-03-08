@@ -89,7 +89,7 @@ partial class Renderer {
             if (dist < 1) {
               renderer.Dispose();
             } else {
-              floatersToRender.Add(((int)dist, floaterRenderers.Count));
+              floatersToRender.Add((dist.ToInt(), floaterRenderers.Count));
               floaterRenderers.Add(renderer);
             }
           }

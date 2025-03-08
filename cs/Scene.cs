@@ -86,7 +86,7 @@ class Scene {
         sectors[adjSectors[i - 1].sectorIdx1].adjSectorUpto = i;
         sectors[adjSectors[i].sectorIdx1].adjSectorFrom = i;
       }
-      sectors[adjSectors[^1].sectorIdx1].adjSectorUpto = (int)adjSectors.Length;
+      sectors[adjSectors[^1].sectorIdx1].adjSectorUpto = adjSectors.Length;
     }
     for (int i = 0; i < segments.Length; i++) {
       ref var segment = ref segments[i];

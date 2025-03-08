@@ -40,7 +40,7 @@ class MapRenderer {
     double dx = (x2 - x1) / steps;
     double dy = (y2 - y1) / steps;
     for (int i = 0; i < steps; i++) {
-      pixels[(int)y1 * canvasWidth + (int)x1] = color;
+      pixels[y1.ToInt() * canvasWidth + x1.ToInt()] = color;
       x1 += dx;
       y1 += dy;
     }
@@ -52,20 +52,20 @@ class MapRenderer {
 
   public void RenderMap() {
     Array.Clear(pixels);
-    int xFrom = (int)Math.Ceiling(mapLeft  / 1024 - 3) * 1024;
-    int xUpto = (int)Math.Ceiling(mapRight / 1024 + 3) * 1024;
+    int xFrom = Math.Ceiling(mapLeft  / 1024 - 3).ToInt() * 1024;
+    int xUpto = Math.Ceiling(mapRight / 1024 + 3).ToInt() * 1024;
     for (int x = xFrom; x < xUpto; x += 1024) {
-      int col = (int)MapWorldToCanvasX(x);
+      int col = MapWorldToCanvasX(x).ToInt();
       if (col < 0 || col >= canvasWidth) continue;
       int step = canvasWidth * 2;
       for (int i = col; i < pixels.Length; i += step) {
         pixels[i] = 0xffaaaaaa;
       }
     }
-    int yFrom = (int)Math.Ceiling(mapBottom / 1024 - 3) * 1024;
-    int yUpto = (int)Math.Ceiling(mapTop    / 1024 + 3) * 1024;
+    int yFrom = Math.Ceiling(mapBottom / 1024 - 3).ToInt() * 1024;
+    int yUpto = Math.Ceiling(mapTop    / 1024 + 3).ToInt() * 1024;
     for (int y = yFrom; y < yUpto; y += 1024) {
-      int row = (int)MapWorldToCanvasY(y);
+      int row = MapWorldToCanvasY(y).ToInt();
       if (row < 0 || row >= canvasHeight) continue;
       int idxFrom = row * canvasWidth;
       int idxUpto = idxFrom + canvasWidth;
@@ -88,7 +88,7 @@ class MapRenderer {
     double py0 = MapWorldToCanvasY(player.y);
     int size = Math.Max(1, canvasWidth / 320);
     if (IsWithinBounds(px0, py0, size)) {
-      int pCol = (int)px0, pRow = (int)py0;
+      int pCol = px0.ToInt(), pRow = py0.ToInt();
       for (int row = pRow - size; row <= pRow + size; row++) {
         for (int col = pCol - size; col <= pCol + size; col++) {
           pixels[row * canvasWidth + col] = 0xffffffff;

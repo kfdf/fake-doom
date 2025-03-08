@@ -288,3 +288,9 @@ class InputState {
     zoomIn, zoomOut, strafe, creep, doorsOpen, fullbright, noblock, 
     incResolution, decResolution, incThreads, decThreads;
 }
+
+static class DoubleExtensions {
+  public static int ToInt(this double value) {
+    return double.ConvertToIntegerNative<int>(value);
+  }
+}

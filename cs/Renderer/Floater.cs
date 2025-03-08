@@ -24,12 +24,12 @@ partial class Renderer {
       leftDist = proj.dist1;
       rightDist = proj.dist2;
       if (leftDist > rightDist) {
-        minDist = (int)Math.Max(1, rightDist - 0.00001);
+        minDist = Math.Max(1, rightDist - 0.00001).ToInt();
         column = (short)(proj.col1 - 1);
         columnUpto = (short)(proj.col2 - 1);
         columnStep = 1;
       } else {
-        minDist = (int)Math.Max(1, leftDist - 0.00001);
+        minDist = Math.Max(1, leftDist - 0.00001).ToInt();
         column = proj.col2;
         columnUpto = proj.col1;
         columnStep = -1;
@@ -98,7 +98,7 @@ partial class Renderer {
           int idxFrom = postFrom * viewportSize + column;
           int idxUpto = postUpto * viewportSize;
           for (int idx = idxFrom; idx < idxUpto; idx += viewportSize) {
-            pixels[idx] = colormap[postPixels[(int)postIdx]];
+            pixels[idx] = colormap[postPixels[postIdx.ToInt()]];
             postIdx += canvasToFloater;
           }
         }

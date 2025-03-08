@@ -126,7 +126,7 @@ partial class Renderer {
   }
   public byte[] GetColormap(int colormapIdx, double dist) {
     if (fullbright) return scene.colormaps[0];
-    colormapIdx += Math.Min(((int)dist >> 4) - 10, 0);
+    colormapIdx += Math.Min((dist.ToInt() >> 4) - 10, 0);
     return scene.colormaps[Math.Max(colormapIdx, 0)];
   }
   void InvokeCallback(int column) {

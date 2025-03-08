@@ -15,7 +15,7 @@ partial class Renderer {
     }
     double skyIdxStep = 100.0 / canvasHeight * player.fov;
     for (int row = skyFromClamped; row < upto; row++) {
-      int skyColIdx = (int)((row - skyFrom) * skyIdxStep) & 0x7f;
+      int skyColIdx = ((row - skyFrom) * skyIdxStep).ToInt() & 0x7f;
       pixels[idx] = skyPixels[skyPixelsColStart + skyColIdx];
       idx += viewportWidth;
     }
@@ -25,7 +25,7 @@ partial class Renderer {
     Texture texture, byte[] colormap, double dist,
     double textureWorldTop, double textureX
   ) {
-    int texCol = (int)textureX % texture.width;
+    int texCol = textureX.ToInt() % texture.width;
     if (texCol < 0) texCol += texture.width;
     double texWorldStep = dist * invDist;
     double texWorldRow = (horizon - from) * texWorldStep + player.height;
@@ -34,7 +34,7 @@ partial class Renderer {
     int idxFrom = from * viewportWidth + column;
     int idxUpto = upto * viewportWidth;
     for (int idx = idxFrom; idx < idxUpto; idx += viewportWidth) {
-      int texRow = (int)(textureWorldTop - texWorldRow) & 0x7f;
+      int texRow = (textureWorldTop - texWorldRow).ToInt() & 0x7f;
       texWorldRow -= texWorldStep;
       pixels[idx] = colormap[wallPixels[textureColStart + texRow]];
     }               
